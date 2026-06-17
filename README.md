@@ -73,8 +73,9 @@ binsta/
 ### Installation
 
 **1. Clone the repository**
-Then: 
+
 ```bash
+git clone https://github.com/ghsalome/Binsta.git
 cd src
 ```
 
