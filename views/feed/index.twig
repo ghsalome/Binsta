@@ -1,0 +1,51 @@
+{% extends "layouts/app.twig" %}
+
+{% block content %}
+	<div class="max-w-2xl mx-auto mt-10">
+
+		{% if error %}
+			<div class="bg-red-100 text-red-700 border border-red-300 rounded-md p-3 mb-4 text-sm">
+				{{ error }}
+			</div>
+		{% endif %}
+
+		<h2 class="text-3xl font-bold mb-6 text-gray-800">Feed</h2>
+
+		{% if posts|length == 0 %}
+			<div class="bg-white shadow rounded-lg p-6 text-center text-gray-500">
+				<p>No posts yet..</p>
+			</div>
+		{% endif %}
+
+		<div class="space-y-6">
+			{% for post in posts %}
+				<div class="bg-white shadow rounded-lg p-6 border border-gray-200">
+
+					<div class="flex items-center mb-4">
+						<a href="/profile/show?id={{ post.user_id }}" class="flex items-center gap-3">
+							<img src="/images/{{ post.user.profile_picture }}" class="w-10 h-10 rounded-full object-cover border">
+							<div>
+								<p class="font-semibold text-gray-800">{{ post.user.username }}</p>
+								<p class="text-sm text-gray-500">@{{ post.user.username }}</p>
+							</div>
+						</a>
+					</div>
+
+					<div class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto mb-4">
+						<pre><code class="language-{{ post.language }}">{{ post.code }}</code></pre>
+					</div>
+
+					<p class="text-gray-700 mb-4">{{ post.caption }}</p>
+
+					<div class="flex justify-between items-center">
+						<a href="/feed/show?id={{ post.id }}" class="text-blue-600 hover:text-blue-800 font-medium">
+							Bekijk post →
+						</a>
+					</div>
+
+				</div>
+			{% endfor %}
+		</div>
+
+	</div>
+{% endblock %}

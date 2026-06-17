@@ -1,0 +1,54 @@
+{% extends "layouts/app.twig" %}
+
+{% block content %}
+	<div
+		class="max-w-3xl mx-auto mt-10">
+
+		<!-- Profile Header -->
+		<div class="bg-white shadow rounded-lg p-8 text-center border border-gray-200 mb-10">
+			<img src="/images/{{ user.profile_picture }}" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-gray-300 shadow">
+
+			<h2 class="text-2xl font-bold mt-4 text-gray-800">{{ user.name }}</h2>
+			<p class="text-gray-500">@{{ user.username }}</p>
+
+			{% if user.bio %}
+				<p class="text-gray-700 mt-3 max-w-md mx-auto">{{ user.bio }}</p>
+			{% endif %}
+
+			{% if session.user_id == user.id %}
+				<a href="/profile/edit?id={{ user.id }}" class="inline-block mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+					Profiel bewerken
+				</a>
+			{% endif %}
+		</div>
+
+		<!-- Posts Section -->
+		<h3 class="text-xl font-semibold text-gray-800 mb-4">
+			Posts van
+			{{ user.username }}
+		</h3>
+
+		{% if posts|length == 0 %}
+			<div class="bg-white shadow rounded-lg p-6 text-center text-gray-500">
+				<p>This user has no posts yet..</p>
+			</div>
+		{% endif %}
+
+
+		<div class="space-y-6">
+			{% for post in posts %}
+				<div class="bg-white shadow rounded-lg p-6 border border-gray-200">
+
+					<a href="/feed/show?id={{ post.id }}">
+						<div class="bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto mb-4">
+							<pre><code class="language-{{ post.language }}">{{ post.code }}</code></pre>
+						</div>
+					</a>
+
+					<p class="text-gray-700">{{ post.caption }}</p>
+				</div>
+			{% endfor %}
+		</div>
+
+	</div>
+{% endblock %}
